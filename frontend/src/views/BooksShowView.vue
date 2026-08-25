@@ -1,10 +1,18 @@
 <script setup lang="ts">
-import { BookService } from '@/services/BookService.js';
+import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 
+import BookReviews from '@/components/BookReviews.vue';
+import { BookService } from '@/services/BookService';
+import { formatToCOP } from '@/utils/formatters';
+
 const route = useRoute();
-const bookId = Number(route.params.id);
-const book = BookService.getBookById(bookId);
+
+const bookId = computed(() => Number(route.params.id));
+
+const book = computed(() =>
+  BookService.getBookById(bookId.value),
+);
 </script>
 
 <template>
@@ -21,12 +29,17 @@ const book = BookService.getBookById(bookId);
                   class="object-cover rounded shadow-sm w-72 h-auto"
                 />
               </div>
+
               <div>
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ book.title }}</h2>
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">
+                  {{ book.title }}
+                </h2>
+
                 <div class="prose text-gray-600">
                   <p class="mb-4">
-                    "{{ book.title }}" is an outstanding work in the {{ book.category }} category.
-                    This work is an important part of our collection and has been carefully selected
+                    "{{ book.title }}" is an outstanding work in the
+                    {{ book.category }} category. This work is an important
+                    part of our collection and has been carefully selected
                     to enrich the reading experience of our users.
                   </p>
                 </div>
@@ -36,26 +49,38 @@ const book = BookService.getBookById(bookId);
 
           <div class="space-y-8">
             <div class="bg-white rounded-lg shadow-md p-6">
-              <h3 class="text-lg font-semibold text-gray-800 mb-4">Book Information</h3>
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">
+                Book Information
+              </h3>
+
               <div class="space-y-3">
                 <div class="flex justify-between">
                   <span class="text-gray-600">Title:</span>
+
                   <span class="font-medium">
                     {{ book.title }}
                   </span>
                 </div>
+
                 <div class="flex justify-between">
                   <span class="text-gray-600">Category:</span>
+
                   <span class="font-medium">
                     {{ book.category }}
                   </span>
                 </div>
+
                 <div class="flex justify-between">
                   <span class="text-gray-600">Price:</span>
-                  <span class="font-medium">${{ book.price }}</span>
+
+                  <span class="font-medium">
+                    {{ formatToCOP(book.price) }}
+                  </span>
                 </div>
+
                 <div class="flex justify-between">
                   <span class="text-gray-600">Stock:</span>
+
                   <span class="font-medium">
                     {{ book.stock }}
                   </span>
@@ -63,8 +88,20 @@ const book = BookService.getBookById(bookId);
               </div>
             </div>
           </div>
+
+          <div class="bg-white rounded-lg shadow-md p-6 mt-8">
+            <BookReviews :book-id="book.id" />
+          </div>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section v-else>
+    <div class="max-w-7xl mx-auto text-center py-12">
+      <p class="text-gray-500">
+        Book not found.
+      </p>
     </div>
   </section>
 </template>
