@@ -8,18 +8,14 @@ const books = BookService.getBooks();
 const selectedCategory = ref('');
 const successMessage = ref('');
 
-const selectorCategories = computed(() =>
-  BookService.getUniqueBookCategories(),
-);
+const selectorCategories = computed(() => BookService.getUniqueBookCategories());
 
 const filteredBooks = computed(() => {
   if (!selectedCategory.value) {
     return books;
   }
 
-  return books.filter(
-    (book) => book.category === selectedCategory.value,
-  );
+  return books.filter((book) => book.category === selectedCategory.value);
 });
 
 function deleteLastBook(): void {
@@ -29,8 +25,7 @@ function deleteLastBook(): void {
     return;
   }
 
-  successMessage.value =
-    `Book "${deletedBook.title}" deleted successfully!`;
+  successMessage.value = `Book "${deletedBook.title}" deleted successfully!`;
 
   setTimeout(() => {
     successMessage.value = '';
@@ -77,11 +72,7 @@ function deleteLastBook(): void {
         >
           <option value="">All Categories</option>
 
-          <option
-            v-for="category in selectorCategories"
-            :key="category"
-            :value="category"
-          >
+          <option v-for="category in selectorCategories" :key="category" :value="category">
             {{ category }}
           </option>
         </select>
@@ -92,10 +83,7 @@ function deleteLastBook(): void {
         v-if="filteredBooks.length > 0"
         class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
       >
-        <div
-          v-for="book in filteredBooks"
-          :key="book.id"
-        >
+        <div v-for="book in filteredBooks" :key="book.id">
           <div
             class="bg-white rounded-lg shadow-md hover:shadow-lg transition duration-300 p-6 border border-gray-200"
           >
@@ -112,10 +100,7 @@ function deleteLastBook(): void {
                 {{ book.stock }} available
               </span>
 
-              <span
-                v-else
-                class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full ml-2"
-              >
+              <span v-else class="bg-red-100 text-red-800 text-xs px-2 py-1 rounded-full ml-2">
                 Not available
               </span>
             </div>
@@ -138,13 +123,9 @@ function deleteLastBook(): void {
             <!-- Price -->
             <div class="bg-gray-50 rounded-lg p-3 mb-4">
               <div class="flex justify-between text-sm">
-                <span class="text-gray-600">
-                  Price:
-                </span>
+                <span class="text-gray-600"> Price: </span>
 
-                <span class="font-semibold">
-                  ${{ formatToCOP(book.price) }}
-                </span>
+                <span class="font-semibold"> ${{ formatToCOP(book.price) }} </span>
               </div>
             </div>
 
@@ -163,12 +144,7 @@ function deleteLastBook(): void {
       </div>
 
       <!-- No books -->
-      <div
-        v-else
-        class="text-center text-gray-500 py-8"
-      >
-        No books found.
-      </div>
+      <div v-else class="text-center text-gray-500 py-8">No books found.</div>
     </div>
   </section>
 </template>

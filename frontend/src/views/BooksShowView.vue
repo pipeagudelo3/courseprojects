@@ -10,9 +10,7 @@ const route = useRoute();
 
 const bookId = computed(() => Number(route.params.id));
 
-const book = computed(() =>
-  BookService.getBookById(bookId.value),
-);
+const book = computed(() => BookService.getBookById(bookId.value));
 </script>
 
 <template>
@@ -37,9 +35,8 @@ const book = computed(() =>
 
                 <div class="prose text-gray-600">
                   <p class="mb-4">
-                    "{{ book.title }}" is an outstanding work in the
-                    {{ book.category }} category. This work is an important
-                    part of our collection and has been carefully selected
+                    "{{ book.title }}" is an outstanding work in the {{ book.category }} category.
+                    This work is an important part of our collection and has been carefully selected
                     to enrich the reading experience of our users.
                   </p>
                 </div>
@@ -49,9 +46,7 @@ const book = computed(() =>
 
           <div class="space-y-8">
             <div class="bg-white rounded-lg shadow-md p-6">
-              <h3 class="text-lg font-semibold text-gray-800 mb-4">
-                Book Information
-              </h3>
+              <h3 class="text-lg font-semibold text-gray-800 mb-4">Book Information</h3>
 
               <div class="space-y-3">
                 <div class="flex justify-between">
@@ -99,9 +94,7 @@ const book = computed(() =>
 
   <section v-else>
     <div class="max-w-7xl mx-auto text-center py-12">
-      <p class="text-gray-500">
-        Book not found.
-      </p>
+      <p class="text-gray-500">Book not found.</p>
     </div>
   </section>
 </template>

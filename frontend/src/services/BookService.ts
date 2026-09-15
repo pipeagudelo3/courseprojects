@@ -8,18 +8,13 @@ export class BookService {
   }
 
   static getBookById(id: number): BookInterface | undefined {
-    return useBookStore().books.find(
-      (book) => book.id === id,
-    );
+    return useBookStore().books.find((book) => book.id === id);
   }
 
   static createBook(book: CreateBookDTO): BookInterface {
     const store = useBookStore();
 
-    const nextId =
-      store.books.length > 0
-        ? Math.max(...store.books.map((item) => item.id)) + 1
-        : 1;
+    const nextId = store.books.length > 0 ? Math.max(...store.books.map((item) => item.id)) + 1 : 1;
 
     const newBook: BookInterface = {
       id: nextId,
@@ -36,9 +31,7 @@ export class BookService {
   }
 
   static getUniqueBookCategories(): string[] {
-    const categories = BookService.getBooks().map(
-      (book) => book.category,
-    );
+    const categories = BookService.getBooks().map((book) => book.category);
 
     return [...new Set(categories)].sort();
   }
