@@ -1,8 +1,6 @@
-export interface ReviewInterface {
-  id: number;
+export class CreateReviewDto {
   bookId: number;
   rating: number;
   comment: string;
   author?: string;
-  createdAt?: string;
 }
